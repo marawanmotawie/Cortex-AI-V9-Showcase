@@ -1,4 +1,4 @@
-# ⚡ Cortex AI - V9 Strategic Overhaul
+ # ⚡ Cortex AI - V9 Strategic Overhaul
 
 Welcome to the official interactive showcase of the **Cortex AI Unified Trading System (V9.0 Modern)**. This showcase demonstrates the power of autonomous high-frequency trading with a focus on Relative Strength, Macro Confluence, and Precision Execution.
 
