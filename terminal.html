@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Infrastructure</title>
+    <link rel="stylesheet" href="showcase.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .terminal-container {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .log-row {
+            display: flex;
+            gap: 15px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        .timestamp {
+            color: var(--text-muted);
+            min-width: 80px;
+        }
+
+        .level {
+            min-width: 60px;
+            font-weight: bold;
+        }
+
+        .module {
+            color: var(--accent-primary);
+            min-width: 100px;
+        }
+
+        .message {
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .status-item {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .status-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="flex-between" style="margin-bottom: 40px;">
+            <div>
+                <h1 class="text-gold" style="-webkit-text-fill-color: initial; background: none;">TRADING SYSTEM CORE
+                </h1>
+                <p class="text-muted">System v9.0-MODERN • High Performance Active</p>
+            </div>
+            <div class="badge badge-gold" style="font-size: 0.9rem; padding: 8px 16px;">
+                SYSTEM OPERATIONAL
+            </div>
+        </div>
+
+        <!-- Status Metrics -->
+        <div class="status-grid">
+            <div class="status-item">
+                <div class="status-label">API Latency</div>
+                <div class="status-value text-success">24ms</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">BTC Live</div>
+                <div class="status-value text-blue" id="btc-price">CONNECTING...</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">ETH Live</div>
+                <div class="status-value text-blue" id="eth-price">CONNECTING...</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">Active Nodes</div>
+                <div class="status-value">4/4 Optimized</div>
+            </div>
+        </div>
+
+        <!-- Terminal Output -->
+        <div class="card terminal-container">
+            <div class="card-header">
+                <span class="card-title">System Event Log</span>
+                <span class="mono text-muted text-xs">Live Stream</span>
+            </div>
+            <div id="logs"></div>
+        </div>
+    </div>
+
+    <script>
+        // Language Handling
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLang = urlParams.get('lang') || 'en';
+
+        const content = {
+            en: {
+                title: "TRADING SYSTEM CORE",
+                subtitle: "System v9.0-MODERN • High Performance Active",
+                status: "SYSTEM OPERATIONAL",
+                latency: "API Latency",
+                activeNodes: "Active Nodes",
+                logsTitle: "System Event Log",
+                logsStream: "Live Stream",
+                logs: [
+                    { time: '08:00:01', level: 'INFO', mod: 'SYSTEM', msg: 'Starting Unified Trading Core...' },
+                    { time: '08:00:02', level: 'INFO', mod: 'AI_BRAIN', msg: 'System online. Checking market direction.' },
+                    { time: '08:00:02', level: 'INFO', mod: 'SAFETY', msg: 'Safety checks passed. No risks detected.' },
+                    { time: '08:00:03', level: 'SUCCESS', mod: 'SYSTEM', msg: 'Connection established. Ready to trade.' },
+                    { time: '08:00:05', level: 'INFO', mod: 'SCANNER', msg: 'Searching for winning opportunities...' },
+                    { time: '08:00:08', level: 'SUCCESS', mod: 'SCANNER', msg: 'Found 12 high-potential setups.' },
+                    { time: '08:00:09', level: 'INFO', mod: 'AI_BRAIN', msg: 'Choosing best coin for high-success chance.' },
+                    { time: '08:00:10', level: 'INFO', mod: 'SELECTOR', msg: 'AI Choice: STRONG BUY (Confidence: 94%).' },
+                    { time: '08:00:15', level: 'INFO', mod: 'TRADER', msg: 'Executing trade on Binance Exchange...' },
+                    { time: '08:00:18', level: 'SUCCESS', mod: 'TRADE', msg: 'Position Active. Monitoring for Profit.' }
+                ]
+            },
+            ar: {
+                title: "نواة نظام التداول",
+                subtitle: "نظام v9.0 الحديث • أداء عالي نشط",
+                status: "النظام يعمل بكفاءة",
+                latency: "سرعة الاتصال",
+                activeNodes: "النقاط النشطة",
+                logsTitle: "سجل أحداث النظام",
+                logsStream: "بث مباشر",
+                logs: [
+                    { time: '08:00:01', level: 'معلومات', mod: 'النظام', msg: 'بدء تشغيل نواة التداول الموحدة...' },
+                    { time: '08:00:02', level: 'معلومات', mod: 'الذكاء', msg: 'النظام متصل. جاري فحص اتجاه السوق.' },
+                    { time: '08:00:02', level: 'معلومات', mod: 'الأمان', msg: 'اجتياز فحوصات الأمان. لا توجد مخاطر.' },
+                    { time: '08:00:03', level: 'نجاح', mod: 'النظام', msg: 'تم إنشاء الاتصال. جاهز للتداول.' },
+                    { time: '08:00:05', level: 'معلومات', mod: 'المسح', msg: 'البحث عن فرص ربح قوية...' },
+                    { time: '08:00:08', level: 'نجاح', mod: 'المسح', msg: 'تم العثور على 12 فرصة عالية الإمكانيات.' },
+                    { time: '08:00:09', level: 'معلومات', mod: 'الذكاء', msg: 'اختيار أفضل عملة لضمان أعلى نسبة نجاح.' },
+                    { time: '08:00:10', level: 'معلومات', mod: 'المحلل', msg: 'قرار الذكاء: شراء قوي (ثقة: 94%).' },
+                    { time: '08:00:15', level: 'معلومات', mod: 'المنفذ', msg: 'جاري تنفيذ الصفقة على منصة بينانس...' },
+                    { time: '08:00:18', level: 'نجاح', mod: 'الصفقة', msg: 'الصفقة نشطة. مراقبة الأرباح.' }
+                ]
+            }
+        };
+
+        // Apply Localization
+        const langData = content[currentLang];
+        document.querySelector('h1').innerText = langData.title;
+        document.querySelector('p.text-muted').innerText = langData.subtitle;
+        document.querySelector('.badge').innerText = langData.status;
+        document.querySelectorAll('.status-label')[0].innerText = langData.latency;
+        document.querySelectorAll('.status-label')[3].innerText = langData.activeNodes;
+        document.querySelector('.card-title').innerText = langData.logsTitle;
+        document.querySelector('.mono.text-muted.text-xs').innerText = langData.logsStream;
+
+        if (currentLang === 'ar') {
+            document.body.classList.add('rtl');
+        }
+
+        const logData = langData.logs;
+        let index = 0;
+        const logContainer = document.getElementById('logs');
+
+        function addLog() {
+            if (index >= logData.length) return;
+            const item = logData[index];
+            const row = document.createElement('div');
+            row.className = 'log-row';
+
+            let colorClass = 'text-primary';
+            if (item.level === 'SUCCESS' || item.level === 'نجاح') colorClass = 'text-success';
+
+            row.innerHTML = `
+                <div class="timestamp mono">${item.time}</div>
+                <div class="level text-xs ${colorClass}">${item.level}</div>
+                <div class="module mono text-xs">${item.mod}</div>
+                <div class="message">${item.msg}</div>
+            `;
+
+            logContainer.appendChild(row);
+            index++;
+
+            // Randomize delay for "natural" feel
+            setTimeout(addLog, Math.random() * 800 + 400);
+        }
+
+        // --- Real-Time Price Loading from Binance API ---
+        let btcPrice = 0;
+        let ethPrice = 0;
+
+        async function fetchLivePrices() {
+            try {
+                // Fetch BTC & ETH directly from Binance Public API
+                const [btcRes, ethRes] = await Promise.all([
+                    fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'),
+                    fetch('https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT')
+                ]);
+
+                const btcData = await btcRes.json();
+                const ethData = await ethRes.json();
+
+                btcPrice = parseFloat(btcData.price);
+                ethPrice = parseFloat(ethData.price);
+
+                document.getElementById('btc-price').innerText = '$' + btcPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById('eth-price').innerText = '$' + ethPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                // Update badge to indicate LIVE status
+                const badge = document.querySelector('.badge');
+                if (badge && !badge.innerText.includes('LIVE')) {
+                    badge.innerHTML = `<span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%; margin-right:8px; animation: pulse 1s infinite;"></span>` + badge.innerText + ' [LIVE]';
+                }
+            } catch (e) {
+                console.error('API Error, falling back to simulation:', e);
+                // Fallback simulation if API fails
+                btcPrice = btcPrice || 96000;
+                ethPrice = ethPrice || 3200;
+                btcPrice += (Math.random() - 0.5) * 5;
+                ethPrice += (Math.random() - 0.5) * 1;
+                document.getElementById('btc-price').innerText = '$' + btcPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById('eth-price').innerText = '$' + ethPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
+            setTimeout(fetchLivePrices, 3000);
+        }
+
+        window.onload = () => {
+            addLog();
+            fetchLivePrices();
+        };
+    </script>
+</body>
+
+</html>

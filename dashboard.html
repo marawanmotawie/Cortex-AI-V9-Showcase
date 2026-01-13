@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execution Dashboard</title>
+    <link rel="stylesheet" href="showcase.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .price-display {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-panel);
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-primary);
+            width: 0%;
+            transition: width 1s linear;
+        }
+
+        .order-book {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .book-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+
+        .book-ask {
+            color: var(--accent-danger);
+        }
+
+        .book-bid {
+            color: var(--accent-success);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="flex-between" style="margin-bottom: 30px;">
+            <div>
+                <h1 class="text-gold" style="-webkit-text-fill-color: initial; background: none;">SMART TRADING
+                    DASHBOARD</h1>
+                <p class="text-muted">Automatic Trading Active • AI Mode: Balanced Power</p>
+            </div>
+            <div class="badge badge-gold" style="font-size: 1rem; padding: 10px 20px;">
+                ACTIVE TRADE: BCH/USDT
+            </div>
+        </div>
+
+        <div class="dashboard-layout">
+            <!-- Main Trade Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Position Status</span>
+                    <span class="mono text-sm timestamp">ID: 994821</span>
+                </div>
+
+                <div class="flex-between">
+                    <div>
+                        <div class="text-sm text-muted">Current Price</div>
+                        <div class="price-display">432.50</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="text-sm text-muted">PnL (Unrealized)</div>
+                        <div class="price-display text-gold-glow">+1.45%</div>
+                    </div>
+                </div>
+
+                <div class="metric-row">
+                    <div>
+                        <div class="text-xs text-muted">Entry Price</div>
+                        <div class="mono text-white">426.30</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-muted">Target</div>
+                        <div class="mono text-white">434.80</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-muted">Stop Loss (Trailing)</div>
+                        <div class="mono text-muted">430.15</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <div class="flex-between">
+                        <span class="text-xs text-muted target-prog-label">Target Progress</span>
+                        <span class="text-xs mono">85%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Book / Metrics -->
+            <div class="flex-col gap-4">
+                <div class="card" style="flex: 1;">
+                    <div class="card-header">
+                        <span class="card-title">AI Intelligence</span>
+                    </div>
+                    <div class="gap-4 flex-col">
+                        <div class="flex-between">
+                            <span class="text-sm text-muted">Power Score</span>
+                            <span class="mono text-sm success-text">STRONG</span>
+                        </div>
+                        <div class="flex-between">
+                            <span class="text-sm text-muted">Market Speed</span>
+                            <span class="mono text-sm">NORMAL</span>
+                        </div>
+                        <div class="flex-between">
+                            <span class="text-sm text-muted">Success Chance</span>
+                            <span class="badge badge-v9">94%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="flex: 1;">
+                    <div class="card-header">
+                        <span class="card-title">Live Book</span>
+                        <div class="text-xs text-green">Connected</div>
+                    </div>
+                    <div class="order-book">
+                        <!-- Simulated DOM -->
+                        <div class="book-row book-ask"><span>432.60</span><span>0.521</span></div>
+                        <div class="book-row book-ask"><span>432.55</span><span>1.200</span></div>
+                        <div class="book-row book-ask"><span>432.51</span><span>0.150</span></div>
+                        <div style="height: 1px; background: #333; margin: 4px 0;"></div>
+                        <div class="book-row book-bid"><span>432.48</span><span>2.500</span></div>
+                        <div class="book-row book-bid"><span>432.45</span><span>0.850</span></div>
+                        <div class="book-row book-bid"><span>432.40</span><span>5.120</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Language Handling
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLang = urlParams.get('lang') || 'en';
+
+        const content = {
+            en: {
+                title: "SMART TRADING DASHBOARD",
+                subtitle: "Automatic Trading Active • AI Mode: Balanced Power",
+                activeTrade: "ACTIVE TRADE: BCH/USDT",
+                posStatus: "Position Status",
+                currPrice: "Current Price",
+                pnl: "PnL (Unrealized)",
+                entry: "Entry Price",
+                target: "Target",
+                stopLoss: "Stop Loss (Trailing)",
+                targetProg: "Target Progress",
+                aiIntell: "AI Intelligence",
+                pwrScore: "Power Score",
+                mktSpeed: "Market Speed",
+                successChance: "Success Chance",
+                liveBook: "Live Book",
+                connected: "Connected",
+                strong: "STRONG",
+                normal: "NORMAL"
+            },
+            ar: {
+                title: "لوحة تحكم التداول الذكي",
+                subtitle: "التداول الآلي نشط • وضع الذكاء: طاقة متوازنة",
+                activeTrade: "صفقة نشطة: BCH/USDT",
+                posStatus: "حالة الصفقة",
+                currPrice: "السعر الحالي",
+                pnl: "الربح/الخسارة (غير محقق)",
+                entry: "سعر الدخول",
+                target: "الهدف",
+                stopLoss: "وقف الخسارة (متحرك)",
+                targetProg: "التقدم نحو الهدف",
+                aiIntell: "ذكاء النظام",
+                pwrScore: "قوة الإشارة",
+                mktSpeed: "سرعة السوق",
+                successChance: "نسبة النجاح المتوقعة",
+                liveBook: "سجل الأوامر المباشر",
+                connected: "متصل",
+                strong: "قوية",
+                normal: "طبيعية"
+            }
+        };
+
+        // Apply Localization
+        const ld = content[currentLang];
+        document.querySelector('h1').innerText = ld.title;
+        document.querySelector('p.text-muted').innerText = ld.subtitle;
+        document.querySelector('.badge.badge-gold').innerText = ld.activeTrade;
+        document.querySelectorAll('.card-title')[0].innerText = ld.posStatus;
+        document.querySelectorAll('.text-muted')[1].innerText = ld.currPrice;
+        document.querySelectorAll('.text-muted')[2].innerText = ld.pnl;
+        document.querySelectorAll('.text-xs.text-muted')[0].innerText = ld.entry;
+        document.querySelectorAll('.text-xs.text-muted')[1].innerText = ld.target;
+        document.querySelectorAll('.text-xs.text-muted')[2].innerText = ld.stopLoss;
+        document.querySelector('.text-xs.text-muted.target-prog-label').innerText = ld.targetProg;
+        document.querySelectorAll('.card-title')[1].innerText = ld.aiIntell;
+        document.querySelectorAll('.text-sm.text-muted')[0].innerText = ld.pwrScore;
+        document.querySelectorAll('.text-sm.text-muted')[1].innerText = ld.mktSpeed;
+        document.querySelectorAll('.text-sm.text-muted')[2].innerText = ld.successChance;
+        document.querySelectorAll('.card-title')[2].innerText = ld.liveBook;
+        document.querySelector('.text-xs.text-green').innerText = ld.connected;
+        document.querySelector('.success-text').innerText = ld.strong;
+        document.querySelectorAll('.mono.text-sm')[1].innerText = ld.normal;
+
+        // --- Real-Time Price & PnL Loading ---
+        const entryPrice = 426.30;
+
+        async function fetchLiveBCH() {
+            try {
+                const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT');
+                const data = await res.json();
+                const currentPrice = parseFloat(data.price);
+
+                // Update UI Prices
+                document.querySelectorAll('.price-display')[0].innerText = currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                // Calculate PnL
+                const pnlPercent = ((currentPrice - entryPrice) / entryPrice) * 100;
+                const pnlDisplay = document.querySelectorAll('.price-display')[1];
+                pnlDisplay.innerText = (pnlPercent >= 0 ? '+' : '') + pnlPercent.toFixed(2) + '%';
+                pnlDisplay.style.color = pnlPercent >= 0 ? '#10b981' : '#ef4444';
+
+                // Update Progress Slide filling
+                const targetPrice = 434.80;
+                let progress = ((currentPrice - entryPrice) / (targetPrice - entryPrice)) * 100;
+                progress = Math.min(Math.max(progress, 0), 100);
+                document.querySelector('.progress-fill').style.width = progress.toFixed(0) + '%';
+                document.querySelector('.mono.text-xs').innerText = progress.toFixed(0) + '%';
+
+            } catch (e) {
+                console.error('Binance API Error:', e);
+            }
+            setTimeout(fetchLiveBCH, 3000);
+        }
+
+        if (currentLang === 'ar') {
+            document.body.classList.add('rtl');
+        }
+
+        fetchLiveBCH();
+    </script>
+
+</html>

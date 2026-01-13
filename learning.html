@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Autonomous Learning - Sanitized</title>
+    <link rel="stylesheet" href="showcase.css">
+    <style>
+        .learning-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .audit-card {
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .cortex-update {
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .processing {
+            background: var(--accent-gold);
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scanner-line"></div>
+    <div class="container">
+        <h4 class="gold-text" style="text-align: center;">AUTONOMOUS SELF-CRITICISM ENGINE</h4>
+        <div class="learning-box">
+            <div class="glass-panel audit-card">
+                <h3 class="mono"><span class="status-dot processing"></span>Shadow Audit Active</h3>
+                <p style="color: #666; font-size: 0.9em; margin: 15px 0;">The system is analyzing missed opportunities
+                    to refine future entry precision.</p>
+                <div class="mono" style="font-size: 0.8em; color: #444;">
+                    > Detecting pattern mismatch in Previous Cycle...<br>
+                    > Analyzing structural hesitation...<br>
+                    <span class="gold-text">> Corrective Lesson Generated: Adjusting Volume Sensitivity.</span>
+                </div>
+            </div>
+            <div class="glass-panel cortex-update">
+                <h3 class="mono">Cortex Synced</h3>
+                <div style="margin-top: 20px;">
+                    <p class="mono" style="font-size: 0.8em; color: #888;">Long-term Adaptation Rate:</p>
+                    <h1 class="gradient-text">98.2%</h1>
+                </div>
+                <div style="margin-top: 20px; font-size: 0.8em; color: #555;">
+                    Neural weights updated based on 7-day performance metrics. Market regime drift detected and
+                    mitigated.
+                </div>
+            </div>
+        </div>
+        <div class="glass-panel" style="margin-top: 30px; text-align: center; border-color: rgba(0, 118, 255, 0.3);">
+            <p class="mono" style="font-size: 0.9em;">System Intelligence Status: <span
+                    class="success-text">EVOLVING</span></p>
+        </div>
+    </div>
+</body>
+
+</html>

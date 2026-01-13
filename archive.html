@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Archive</title>
+    <link rel="stylesheet" href="showcase.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kpi-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 5px;
+        }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .chart-container {
+            height: 350px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-secondary);
+            /* Lighter header */
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 12px 8px;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 16px 8px;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            /* Ensure white text */
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="flex-between" style="margin-bottom: 20px;">
+            <div>
+                <h1>Performance Report</h1>
+                <p class="text-muted">Consolidated Results • Period: Jan 2026</p>
+            </div>
+            <button
+                style="background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                Export PDF
+            </button>
+        </div>
+
+        <div class="summary-cards">
+            <div class="card kpi">
+                <span class="kpi-label">Total Return</span>
+                <span class="kpi-val text-success">+18.4%</span>
+            </div>
+            <div class="card kpi">
+                <span class="kpi-label">Win Rate</span>
+                <span class="kpi-val">72.5%</span>
+            </div>
+            <div class="card kpi">
+                <span class="kpi-label">Profit Factor</span>
+                <span class="kpi-val">2.34</span>
+            </div>
+            <div class="card kpi">
+                <span class="kpi-label">Succeeding Trades</span>
+                <span class="kpi-val text-blue">24/33</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Cumulative Equity Curve</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="equityChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 30px;">
+            <div class="card-header">
+                <span class="card-title">Recent Ledger</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Asset</th>
+                        <th>Direction</th>
+                        <th>Entry</th>
+                        <th>Exit</th>
+                        <th>Return</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono text-muted">2026-01-10</td>
+                        <td class="mono">BCH/USDT</td>
+                        <td><span class="badge badge-blue">LONG</span></td>
+                        <td class="mono">426.30</td>
+                        <td class="mono">432.50</td>
+                        <td class="mono text-success">+1.45%</td>
+                        <td><span class="badge badge-green">CLOSED</span></td>
+                    </tr>
+                    <tr>
+                        <td class="mono text-muted">2026-01-09</td>
+                        <td class="mono">SOL/USDT</td>
+                        <td><span class="badge badge-blue">LONG</span></td>
+                        <td class="mono">145.20</td>
+                        <td class="mono">147.10</td>
+                        <td class="mono text-success">+1.30%</td>
+                        <td><span class="badge badge-green">CLOSED</span></td>
+                    </tr>
+                    <tr>
+                        <td class="mono text-muted">2026-01-08</td>
+                        <td class="mono">ETH/USDT</td>
+                        <td><span class="badge badge-blue">LONG</span></td>
+                        <td class="mono">3210.00</td>
+                        <td class="mono">3205.00</td>
+                        <td class="mono text-muted">-0.15%</td>
+                        <td><span class="badge" style="background: rgba(200,200,200,0.1); color: #aaa;">STOPPED</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Language Handling
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLang = urlParams.get('lang') || 'en';
+
+        const content = {
+            en: {
+                title: "Performance Report",
+                subtitle: "Consolidated Results • Period: Jan 2026",
+                export: "Export PDF",
+                k1: "Total Return",
+                k2: "Win Rate",
+                k3: "Profit Factor",
+                k4: "Succeeding Trades",
+                chartTitle: "Cumulative Equity Curve",
+                ledgerTitle: "Recent Ledger",
+                th1: "Date",
+                th2: "Asset",
+                th3: "Direction",
+                th4: "Entry",
+                th5: "Exit",
+                th6: "Return",
+                th7: "Status",
+                long: "LONG",
+                closed: "CLOSED",
+                stopped: "STOPPED"
+            },
+            ar: {
+                title: "تقرير الأداء",
+                subtitle: "النتائج المجمعة • الفترة: يناير 2026",
+                export: "تصدير PDF",
+                k1: "إجمالي العائد",
+                k2: "نسبة النجاح",
+                k3: "معامل الربح",
+                k4: "الصفقات الناجحة",
+                chartTitle: "منحنى رأس المال التراكمي",
+                ledgerTitle: "سجل العمليات الأخير",
+                th1: "التاريخ",
+                th2: "الأصل",
+                th3: "الاتجاه",
+                th4: "دخول",
+                th5: "خروج",
+                th6: "العائد",
+                th7: "الحالة",
+                long: "شراء",
+                closed: "مغلقة",
+                stopped: "توقف"
+            }
+        };
+
+        // Apply Localization
+        const ld = content[currentLang];
+        document.querySelector('h1').innerText = ld.title;
+        document.querySelector('p.text-muted').innerText = ld.subtitle;
+        document.querySelector('button').innerText = ld.export;
+        document.querySelectorAll('.kpi-label')[0].innerText = ld.k1;
+        document.querySelectorAll('.kpi-label')[1].innerText = ld.k2;
+        document.querySelectorAll('.kpi-label')[2].innerText = ld.k3;
+        document.querySelectorAll('.kpi-label')[3].innerText = ld.k4;
+        document.querySelectorAll('.card-title')[0].innerText = ld.chartTitle;
+        document.querySelectorAll('.card-title')[1].innerText = ld.ledgerTitle;
+
+        const headers = document.querySelectorAll('th');
+        headers[0].innerText = ld.th1;
+        headers[1].innerText = ld.th2;
+        headers[2].innerText = ld.th3;
+        headers[3].innerText = ld.th4;
+        headers[4].innerText = ld.th5;
+        headers[5].innerText = ld.th6;
+        headers[6].innerText = ld.th7;
+
+        document.querySelectorAll('.badge-blue').forEach(b => b.innerText = ld.long);
+        document.querySelectorAll('.badge-green').forEach(b => b.innerText = ld.closed);
+        document.querySelectorAll('.badge').forEach(b => {
+            if (b.innerText === 'STOPPED' || b.innerText === 'توقف') b.innerText = ld.stopped;
+        });
+
+        if (currentLang === 'ar') {
+            document.body.classList.add('rtl');
+        }
+
+        const ctx = document.getElementById('equityChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(56, 189, 248, 0.2)');
+        gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'],
+                datasets: [{
+                    label: currentLang === 'ar' ? 'قيمة المحفظة' : 'Portfolio Value',
+                    data: [1000, 1015, 1032, 1028, 1045, 1060, 1085, 1100, 1095, 1120],
+                    borderColor: '#38bdf8',
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#0f172a',
+                    pointBorderColor: '#38bdf8',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+                    y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

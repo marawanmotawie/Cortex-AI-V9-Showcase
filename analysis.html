@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Neural Analysis - Sanitized</title>
+    <link rel="stylesheet" href="showcase.css">
+    <style>
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 50px;
+        }
+
+        .timeframe-card {
+            height: 300px;
+            padding: 20px;
+            text-align: center;
+            border-top: 4px solid #222;
+        }
+
+        .timeframe-card.match {
+            border-color: var(--success-mint);
+            box-shadow: 0 10px 30px rgba(0, 245, 212, 0.1);
+        }
+
+        .chart-sim {
+            height: 120px;
+            background: rgba(255, 255, 255, 0.02);
+            margin: 20px 0;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-blue);
+            top: 50%;
+            animation: osc 2s infinite ease-in-out;
+        }
+
+        @keyframes osc {
+
+            0%,
+            100% {
+                transform: translateY(-10px);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scanner-line"></div>
+    <div class="container">
+        <h4 class="gold-text" style="text-align: center;">MULTI-LAYER MARKET CHECK</h4>
+        <div class="analysis-grid">
+            <div class="glass-panel timeframe-card" id="t1">
+                <h3 class="mono">GLOBAL TREND</h3>
+                <div class="chart-sim">
+                    <div class="wave" style="animation-duration: 4s;"></div>
+                </div>
+                <p class="mono" style="color: #666;">Market Direction</p>
+                <h2 class="gold-text" id="s1" style="opacity: 0;">POSITIVE</h2>
+            </div>
+            <div class="glass-panel timeframe-card" id="t2">
+                <h3 class="mono">HOUR TREND</h3>
+                <div class="chart-sim">
+                    <div class="wave"></div>
+                </div>
+                <p class="mono" style="color: #666;">Price Strength</p>
+                <h2 class="success-text" id="s2" style="opacity: 0;">STRONG</h2>
+            </div>
+            <div class="glass-panel timeframe-card" id="t3">
+                <h3 class="mono">15M SIGNAL</h3>
+                <div class="chart-sim">
+                    <div class="wave" style="animation-delay: 0.5s;"></div>
+                </div>
+                <p class="mono" style="color: #666;">Power Rating</p>
+                <h2 class="success-text" id="s3" style="opacity: 0;">WINNING</h2>
+            </div>
+            <div class="glass-panel timeframe-card" id="t4">
+                <h3 class="mono">ENTRY POINT</h3>
+                <div class="chart-sim">
+                    <div class="wave" style="animation-delay: 1s;"></div>
+                </div>
+                <p class="mono" style="color: #666;">Smart Selection</p>
+                <h2 class="success-text" id="s4" style="opacity: 0;">READY</h2>
+            </div>
+        </div>
+        <div id="confluence-msg" style="text-align: center; margin-top: 40px; opacity: 0; transition: 1s;">
+            <h1 class="gold-text">MULTIPLE SIGNALS CONFIRMED</h1>
+            <p class="mono" style="color: #888;">All system checks passed. Every layer confirms the trade.</p>
+        </div>
+    </div>
+
+    <script>
+        // Language Handling
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLang = urlParams.get('lang') || 'en';
+
+        const content = {
+            en: {
+                title: "MULTI-LAYER MARKET CHECK",
+                c1: "GLOBAL TREND",
+                c1d: "Market Direction",
+                c1v: "POSITIVE",
+                c2: "HOUR TREND",
+                c2d: "Price Strength",
+                c2v: "STRONG",
+                c3: "15M SIGNAL",
+                c3d: "Power Rating",
+                c3v: "WINNING",
+                c4: "ENTRY POINT",
+                c4d: "Smart Selection",
+                c4v: "READY",
+                confTitle: "MULTIPLE SIGNALS CONFIRMED",
+                confDesc: "All system checks passed. Every layer confirms the trade."
+            },
+            ar: {
+                title: "فحص طبقات السوق المتعددة",
+                c1: "الاتجاه العام",
+                c1d: "مسار السوق الماكرو",
+                c1v: "إيجابي",
+                c2: "اتجاه الساعة",
+                c2d: "قوة التحرك السعري",
+                c2v: "قوية",
+                c3: "إشارة 15 دقيقة",
+                c3d: "تقييم القوة",
+                c3v: "رابحة",
+                c4: "نقطة الدخول",
+                c4d: "الاختيار الذكي",
+                c4v: "مستعدة",
+                confTitle: "تم تأكيد الإشارات المتعددة",
+                confDesc: "تم اجتياز جميع فحوصات النظام. كل الطبقات تؤكد نجاح الصفقة."
+            }
+        };
+
+        // Apply Localization
+        const ld = content[currentLang];
+        document.querySelector('h4').innerText = ld.title;
+        document.querySelectorAll('h3.mono')[0].innerText = ld.c1;
+        document.querySelectorAll('p.mono')[0].innerText = ld.c1d;
+        document.getElementById('s1').innerText = ld.c1v;
+        document.querySelectorAll('h3.mono')[1].innerText = ld.c2;
+        document.querySelectorAll('p.mono')[1].innerText = ld.c2d;
+        document.getElementById('s2').innerText = ld.c2v;
+        document.querySelectorAll('h3.mono')[2].innerText = ld.c3;
+        document.querySelectorAll('p.mono')[2].innerText = ld.c3d;
+        document.getElementById('s3').innerText = ld.c3v;
+        document.querySelectorAll('h3.mono')[3].innerText = ld.c4;
+        document.querySelectorAll('p.mono')[3].innerText = ld.c4d;
+        document.getElementById('s4').innerText = ld.c4v;
+        document.querySelector('#confluence-msg h1').innerText = ld.confTitle;
+        document.querySelector('#confluence-msg p').innerText = ld.confDesc;
+
+        if (currentLang === 'ar') {
+            document.body.classList.add('rtl');
+            document.querySelector('.container').classList.add('rtl');
+        }
+
+        const steps = [
+            { id: 's1', card: 't1', delay: 800 },
+            { id: 's2', card: 't2', delay: 1800 },
+            { id: 's3', card: 't3', delay: 2800 },
+            { id: 's4', card: 't4', delay: 3800 }
+        ];
+        steps.forEach(s => {
+            setTimeout(() => {
+                document.getElementById(s.id).style.opacity = 1;
+                document.getElementById(s.card).classList.add('match');
+            }, s.delay);
+        });
+        setTimeout(() => {
+            document.getElementById('confluence-msg').style.opacity = 1;
+        }, 5000);
+    </script>
+</body>
+
+</html>

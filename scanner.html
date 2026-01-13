@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Scanner</title>
+    <link rel="stylesheet" href="showcase.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .pipeline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .pipeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--border-subtle);
+            z-index: 0;
+        }
+
+        .stage {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 20px;
+            border-radius: 12px;
+            width: 220px;
+            text-align: center;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .stage.active {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        .count-badge {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stage-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .filter-list {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .filter-item {
+            background: rgba(40, 45, 60, 0.6);
+            /* Lighter background for better contrast */
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--border-subtle);
+        }
+
+        .filter-item.passed {
+            border-left-color: var(--accent-success);
+        }
+
+        .filter-item.rejected {
+            border-left-color: var(--accent-danger);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Market Filtration Engine</h1>
+        <p class="text-muted" style="max-width: 600px;">
+            Our proprietary algorithm ingests real-time market data from the entire exchange, applying rigorous filters
+            to isolate only the highest-probability opportunities.
+        </p>
+
+        <div class="pipeline">
+            <div class="stage active">
+                <span class="count-badge">3,482</span>
+                <span class="stage-label">Total Pairs</span>
+            </div>
+            <div class="stage" id="stage2">
+                <span class="count-badge" id="c2">--</span>
+                <span class="stage-label">Liquidity Check</span>
+            </div>
+            <div class="stage" id="stage3">
+                <span class="count-badge" id="c3">--</span>
+                <span class="stage-label">Technical Setup</span>
+            </div>
+            <div class="stage" id="stage4">
+                <span class="count-badge text-green" id="c4">--</span>
+                <span class="stage-label">Risk Approved</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Live Filter Criteria</span>
+                <span class="badge badge-blue">ACTIVE SCANNING</span>
+            </div>
+            <div class="filter-list">
+                <div class="filter-item passed">
+                    <h4 class="text-sm">Volume Threshold</h4>
+                    <p class="text-xs text-muted">Must exceed $5M 24h Volume</p>
+                </div>
+                <div class="filter-item passed">
+                    <h4 class="text-sm">Spread Analysis</h4>
+                    <p class="text-xs text-muted">Spread < 0.2% Required</p>
+                </div>
+                <div class="filter-item passed">
+                    <h4 class="text-sm">Volatility</h4>
+                    <p class="text-xs text-muted">Identify Expansion Patterns</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language Handling
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLang = urlParams.get('lang') || 'en';
+
+        const content = {
+            en: {
+                title: "Market Filtration Engine",
+                desc: "Our proprietary algorithm ingests real-time market data from the entire exchange, applying rigorous filters to isolate only the highest-probability opportunities.",
+                s1: "Total Pairs",
+                s2: "Liquidity Check",
+                s3: "Technical Setup",
+                s4: "Risk Approved",
+                liveTitle: "Live Filter Criteria",
+                scanning: "ACTIVE SCANNING",
+                f1: "Volume Threshold",
+                f1d: "Must exceed $5M 24h Volume",
+                f2: "Spread Analysis",
+                f2d: "Spread < 0.2% Required",
+                f3: "Volatility",
+                f3d: "Identify Expansion Patterns"
+            },
+            ar: {
+                title: "محرك فلترة السوق",
+                desc: "خوارزميتنا الخاصة تقوم بتحليل بيانات السوق اللحظية من المنصة كاملة، مع تطبيق فلاتر صارمة لعزل الفرص ذات الاحتمالية العالية فقط.",
+                s1: "إجمالي الأزواج",
+                s2: "فحص السيولة",
+                s3: "التوافق الفني",
+                s4: "الموافقة الأمنية",
+                liveTitle: "معايير الفلترة الحالية",
+                scanning: "فحص نشط حالياً",
+                f1: "حد السيولة",
+                f1d: "يجب أن يتجاوز حجم التداول 5 مليون دولار",
+                f2: "تحليل الفارق",
+                f2d: "الفارق السعري أقل من 0.2%",
+                f3: "التذبذب",
+                f3d: "رصد أنماط الانفجار السعري"
+            }
+        };
+
+        // Apply Localization
+        const ld = content[currentLang];
+        document.querySelector('h1').innerText = ld.title;
+        document.querySelector('p.text-muted').innerText = ld.desc;
+        document.querySelectorAll('.stage-label')[0].innerText = ld.s1;
+        document.querySelectorAll('.stage-label')[1].innerText = ld.s2;
+        document.querySelectorAll('.stage-label')[2].innerText = ld.s3;
+        document.querySelectorAll('.stage-label')[3].innerText = ld.s4;
+        document.querySelector('.card-title').innerText = ld.liveTitle;
+        document.querySelector('.badge').innerText = ld.scanning;
+        document.querySelectorAll('h4.text-sm')[0].innerText = ld.f1;
+        document.querySelectorAll('.text-xs.text-muted')[0].innerText = ld.f1d;
+        document.querySelectorAll('h4.text-sm')[1].innerText = ld.f2;
+        document.querySelectorAll('.text-xs.text-muted')[1].innerText = ld.f2d;
+        document.querySelectorAll('h4.text-sm')[2].innerText = ld.f3;
+        document.querySelectorAll('.text-xs.text-muted')[2].innerText = ld.f3d;
+
+        if (currentLang === 'ar') {
+            document.body.classList.add('rtl');
+        }
+
+        // Simulate funnel effect
+        setTimeout(() => {
+            const c2 = document.getElementById('c2');
+            document.getElementById('stage2').classList.add('active');
+            animateValue(c2, 3482, 450, 1500);
+        }, 1000);
+
+        setTimeout(() => {
+            const c3 = document.getElementById('c3');
+            document.getElementById('stage3').classList.add('active');
+            animateValue(c3, 450, 12, 1500);
+        }, 3000);
+
+        setTimeout(() => {
+            const c4 = document.getElementById('c4');
+            document.getElementById('stage4').classList.add('active');
+            c4.style.color = '#10b981';
+            animateValue(c4, 12, 3, 1000);
+        }, 5000);
+
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+    </script>
+</body>
+
+</html>
